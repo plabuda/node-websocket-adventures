@@ -1,0 +1,117 @@
+<style>
+    .screen {
+        margin: auto;
+        width: 640;
+        height: 480;
+        display: flex;
+    }
+
+    .login {
+        background-color: steelblue;
+    }
+
+    .chat {
+        background-color: brown;
+    }
+
+    body {
+        background-color: black;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .centered_vertical {
+        position: relative;
+        transform: translateY(-50%);
+        top: 50%;
+    }
+
+    .centered_horizontal {
+        margin: auto;
+    }
+
+    .centered {
+        position: relative;
+        transform: translateY(-50%);
+        top: 50%;
+        margin: auto;
+    }
+
+    .input_div
+    {
+        width: auto; flex-grow: 1; height: 100%; background-color: yellowgreen; display: flex
+    }
+
+    .input_input
+    {
+         width: 100%; height: 100%;
+           font-size: 30;
+           font-family: monospace; font-weight: bold; color: white; background-color: transparent;  border: 0px;
+    }
+
+    h2 {
+        color: white;
+        font-size: 30;
+        font-family: monospace;
+
+    }
+
+    li {
+        color: white;
+        font-size: 20;
+        font-family: monospace;
+
+    }
+
+    .center_text {
+        margin: auto;
+        text-align: center;
+    }
+</style>
+<script>
+    function myFunction() {
+        document.getElementById('login_div').style.display = "none";
+        document.getElementById('chat_div').style.display = "flex";
+        alert(document.getElementById('login_box').value)
+    }
+</script>
+
+<body>
+    <div class="screen login" id="login_div" style="display: flex;">
+        <div
+            style="background-color: black; width:500; height:60px; margin: auto; display: flex; flex-flow: row nowrap;">
+            <div style="background-color:tomato; height: 100%; width: auto; display: flex;">
+                <h2 class="center_text"><b>Login:</b></h2>
+            </div>
+
+            <div class="input_div">     <input id="login_box" class="input_input">
+
+            </div>
+            <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
+                onclick="myFunction()">
+                <h2 class="center_text"><b>></b></h2>
+            </button>
+
+        </div>
+    </div>
+    <div class="screen chat" id="chat_div"
+        style="display: none; flex-flow: row nowrap; align-content: stretch; justify-content: space-between; padding: 15px;">
+        <div style="background-color: teal; width: 48%; display: flex; flex-flow: column nowrap;">
+            <h2>Users present:</h1>
+                <ul style="flex-grow: 1;">
+                    <li>mwajs</li>
+                    <li>plabu</li>
+                </ul>
+                <div style="display: flex; flex-flow: row nowrap; height: 60px;">
+            <div class="input_div">
+                    <input id="message_box" class="input_input">
+                </div>     
+                       <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
+                onclick="myFunction()">
+                <h2 class="center_text"><b>></b></h2>
+            </button>
+                </div>
+        </div>
+        <div style="background-color: violet; width: 48%;"> a</div>
+    </div>
+</body>
