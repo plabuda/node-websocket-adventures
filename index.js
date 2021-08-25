@@ -1,4 +1,5 @@
 const http = require("http");
+const port = process.env.PORT || '9090';
 
 const requestListener = function (req, res) {
   console.log(req.method);
@@ -7,4 +8,4 @@ const requestListener = function (req, res) {
 };
 
 const server = http.createServer(requestListener);
-server.listen(process.env.PORT);
+server.listen(port);
