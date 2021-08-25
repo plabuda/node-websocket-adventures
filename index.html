@@ -73,10 +73,25 @@
     const local = 'http://localhost:9090';
     const address = local;
 
-    function myFunction() {
+    const exampleSocket = new WebSocket('ws://localhost:9090');
+
+    exampleSocket.onopen = (event) => { console.log('socket opened');};
+    exampleSocket.onmessage = (event) => {
+            document.getElementById('response').innerHTML = event.data ;};
+
+
+    function send()
+    {
+        const value = document.getElementById('message_box').value;
+        console.log('sending ' + value + ' to server');
+        exampleSocket.send(value);
+    }   
+    
+    
+    async function myFunction() {
         document.getElementById('login_div').style.display = "none";
         document.getElementById('chat_div').style.display = "flex";
-        alert(document.getElementById('login_box').value)
+        await fetchData();
     }
 
     async function fetchData()
@@ -128,7 +143,7 @@
                     <input id="message_box" class="input_input">
                 </div>     
                        <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
-                onclick="fetchData()">
+                onclick="send()">
                 <h2 class="center_text"><b>></b></h2>
             </button>
                 </div>
