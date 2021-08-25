@@ -69,6 +69,9 @@
     }
 </style>
 <script>
+    const remote ='https://royal-hyper-ocelot.glitch.me';
+    const local = 'http://localhost:9090';
+    const address = local;
 
     function myFunction() {
         document.getElementById('login_div').style.display = "none";
@@ -80,10 +83,12 @@
     {
         try{
             
-        const fetchResponsePromise = fetch('https://royal-hyper-ocelot.glitch.me')
+        const fetchResponsePromise = fetch(address)
             const response = await(fetchResponsePromise);
+            const json = await(response.text());
             console.log(response.ok);
             console.log(response.body);
+            document.getElementById('response').innerHTML = json;
 
         }catch(err)
         {
@@ -128,6 +133,6 @@
             </button>
                 </div>
         </div>
-        <div style="background-color: violet; width: 48%;"> a</div>
+        <div id="response" style="background-color: violet; width: 48%;"> a</div>
     </div>
 </body>
