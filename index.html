@@ -69,10 +69,26 @@
     }
 </style>
 <script>
+
     function myFunction() {
         document.getElementById('login_div').style.display = "none";
         document.getElementById('chat_div').style.display = "flex";
         alert(document.getElementById('login_box').value)
+    }
+
+    async function fetchData()
+    {
+        try{
+            
+        const fetchResponsePromise = fetch('https://royal-hyper-ocelot.glitch.me')
+            const response = await(fetchResponsePromise);
+            console.log(response.ok);
+            console.log(response.body);
+
+        }catch(err)
+        {
+            console.log(err);
+        }
     }
 </script>
 
@@ -107,7 +123,7 @@
                     <input id="message_box" class="input_input">
                 </div>     
                        <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
-                onclick="myFunction()">
+                onclick="fetchData()">
                 <h2 class="center_text"><b>></b></h2>
             </button>
                 </div>
