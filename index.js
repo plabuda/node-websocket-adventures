@@ -1,8 +1,8 @@
-import { createServer } from "http";
-import WebSocket, { WebSocketServer } from "ws";
+const http = require("http");
+const ws = require("ws");
 const port = process.env.PORT || "9090";
 
-const wss = new WebSocketServer({ noServer: true, clientTracking: true });
+const wss = new ws.WebSocketServer({ noServer: true, clientTracking: true });
 
 const requestListener = function (req, res) {
   console.log(req.method);
@@ -20,7 +20,7 @@ wss.on("connection", function connection(ws) {
   ws.send("something connected");
 });
 
-const server = createServer(requestListener);
+const server = http.createServer(requestListener);
 server.on("upgrade", (req, socket, head) => {
   wss.handleUpgrade(req, socket, head, function done(ws) {
     wss.emit("connection", ws, req);
