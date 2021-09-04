@@ -68,6 +68,7 @@
         text-align: center;
     }
 </style>
+<script src="chat_functions.js"></script>
 <script>
     const remote ='https://royal-hyper-ocelot.glitch.me';
     const local = 'http://localhost:9090';
@@ -134,10 +135,7 @@
         style="display: none; flex-flow: row nowrap; align-content: stretch; justify-content: space-between; padding: 15px;">
         <div style="background-color: teal; width: 48%; display: flex; flex-flow: column nowrap;">
             <h2>Users present:</h1>
-                <ul style="flex-grow: 1;">
-                    <li>mwajs</li>
-                    <li>plabu</li>
-                </ul>
+                <ul style="flex-grow: 1;" id="user_list"></ul>
                 <div style="display: flex; flex-flow: row nowrap; height: 60px;">
             <div class="input_div">
                     <input id="message_box" class="input_input">
@@ -148,6 +146,6 @@
             </button>
                 </div>
         </div>
-        <div id="response" style="background-color: violet; width: 48%;"> a</div>
+        <div id="response" style="background-color:dimgray; width: 48%;"></div>
     </div>
 </body>
