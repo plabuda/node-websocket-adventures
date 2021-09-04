@@ -81,13 +81,21 @@
     } 
     
     function myFunction() {
-        document.getElementById('login_div').style.display = "none";
-        document.getElementById('chat_div').style.display = "flex";
         
-        exampleSocket = new WebSocket(websocket_url);
-        exampleSocket.onopen = (event) => { console.log('socket opened');};
-        exampleSocket.onmessage = (event) => {
-            document.getElementById('response').innerHTML = event.data ;};
+        let value = document.getElementById('login_box').value;
+        if(value)
+        {
+            let url = encodeURI(websocket_url.concat("/", value));
+            console.log("Final URL is: " + url);
+
+            document.getElementById('login_div').style.display = "none";
+            document.getElementById('chat_div').style.display = "flex";
+            
+            exampleSocket = new WebSocket(url);
+            exampleSocket.onopen = (event) => { console.log('socket opened');};
+            exampleSocket.onmessage = (event) => {
+                document.getElementById('response').innerHTML = event.data ;};
+        }
 
     }
 </script>
@@ -100,7 +108,7 @@
                 <h2 class="center_text"><b>Login:</b></h2>
             </div>
 
-            <div class="input_div">     <input id="login_box" class="input_input">
+            <div class="input_div"><input id="login_box" class="input_input">
 
             </div>
             <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
