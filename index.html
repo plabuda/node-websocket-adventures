@@ -68,48 +68,27 @@
         text-align: center;
     }
 </style>
+<script src="secret.js"></script>
 <script src="chat_functions.js"></script>
 <script>
-    const remote ='https://royal-hyper-ocelot.glitch.me';
-    const local = 'http://localhost:9090';
-    const address = local;
-
-    const exampleSocket = new WebSocket('wss://royal-hyper-ocelot.glitch.me');
-
-    exampleSocket.onopen = (event) => { console.log('socket opened');};
-    exampleSocket.onmessage = (event) => {
-            document.getElementById('response').innerHTML = event.data ;};
-
+    let exampleSocket; 
 
     function send()
     {
         const value = document.getElementById('message_box').value;
         console.log('sending ' + value + ' to server');
         exampleSocket.send(value);
-    }   
+    } 
     
-    
-    async function myFunction() {
+    function myFunction() {
         document.getElementById('login_div').style.display = "none";
         document.getElementById('chat_div').style.display = "flex";
-        await fetchData();
-    }
+        
+        exampleSocket = new WebSocket(websocket_url);
+        exampleSocket.onopen = (event) => { console.log('socket opened');};
+        exampleSocket.onmessage = (event) => {
+            document.getElementById('response').innerHTML = event.data ;};
 
-    async function fetchData()
-    {
-        try{
-            
-        const fetchResponsePromise = fetch(address)
-            const response = await(fetchResponsePromise);
-            const json = await(response.text());
-            console.log(response.ok);
-            console.log(response.body);
-            document.getElementById('response').innerHTML = json;
-
-        }catch(err)
-        {
-            console.log(err);
-        }
     }
 </script>
 
