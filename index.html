@@ -83,15 +83,7 @@
     function websocket_on_message(event)
     {
         const text = event.data;
-        const opcode = text.substring(0,1);
-        const payload = text.substring(1);
-        if(opcode && payload)
-        {
-            try{            
-            const payload_object = JSON.parse(payload);
-            handle_message(opcode, payload_object);        
-            } finally {}
-        }
+        handle_message_string(text);
     }  
     
     function myFunction() {

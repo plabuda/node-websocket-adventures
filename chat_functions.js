@@ -29,14 +29,26 @@ function get_name_color(name) {
   }
 }
 
+function handle_message_string(text) {
+  const opcode = text.substring(0, 1);
+  const payload = text.substring(1);
+  if (opcode && payload) {
+    try {
+      const payload_object = JSON.parse(payload);
+      handle_message(opcode, payload_object);
+    } finally {
+    }
+  }
+}
+
 function handle_chat_line(payload, bold) {
   append_message(payload.u, payload.t, payload.m, bold);
 }
 
 function handle_message(opcode, payload_object) {
   const handlers = {
-    m: (payload_object) => handle_chat_line(payload_object, false),
-    M: (payload_object) => handle_chat_line(payload_object, true),
+    m: (object_data) => handle_chat_line(object_data, false),
+    M: (object_data) => handle_chat_line(object_data, true),
   };
 
   if (opcode in handlers) {
