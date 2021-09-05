@@ -50,6 +50,7 @@ const requestListener = function (req, res) {
 wss.on("connection", function connection(ws, username) {
   console.log(username + " connected");
   users[username] = ws;
+  push_message(username, "joined.", true);
   // Message
   ws.on("message", function incoming(message) {
     console.log("received: %s", message + " from " + username);
