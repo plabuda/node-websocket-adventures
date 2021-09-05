@@ -29,6 +29,21 @@ function get_name_color(name) {
   }
 }
 
+function handle_chat_line(payload, bold) {
+  append_message(payload.u, payload.t, payload.m, bold);
+}
+
+function handle_message(opcode, payload_object) {
+  const handlers = {
+    m: (payload_object) => handle_chat_line(payload_object, false),
+    M: (payload_object) => handle_chat_line(payload_object, true),
+  };
+
+  if (opcode in handlers) {
+    handlers[opcode](payload_object);
+  }
+}
+
 function get_time_span(timestamp) {
   let span = document.createElement("span");
   span.style.fontWeight = "bold";

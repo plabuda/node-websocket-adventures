@@ -78,7 +78,21 @@
         const value = document.getElementById('message_box').value;
         console.log('sending ' + value + ' to server');
         exampleSocket.send(value);
-    } 
+    }
+
+    function websocket_on_message(event)
+    {
+        const text = event.data;
+        const opcode = text.substring(0,1);
+        const payload = text.substring(1);
+        if(opcode && payload)
+        {
+            try{            
+            const payload_object = JSON.parse(payload);
+            handle_message(opcode, payload_object);        
+            } finally {}
+        }
+    }  
     
     function myFunction() {
         
@@ -97,8 +111,7 @@
             document.getElementById('chat_div').style.display = "flex";};
 
             exampleSocket.onerror = (error) => { exampleSocket = undefined;};
-            exampleSocket.onmessage = (event) => {
-                document.getElementById('response').innerHTML = event.data ;};
+            exampleSocket.onmessage = websocket_on_message;
             } catch
             {
                 exampleSocket = undefined;
