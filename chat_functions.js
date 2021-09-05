@@ -1,9 +1,17 @@
+var users = {};
+
 function get_color_dictionary() {
   if (!get_color_dictionary.dict) {
     get_color_dictionary.dict = {};
   }
 
   return get_color_dictionary.dict;
+}
+
+function get_user_list_item(username) {
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(username));
+  return li;
 }
 
 function get_random_color() {
@@ -30,6 +38,7 @@ function get_name_color(name) {
 }
 
 function handle_message_string(text) {
+  console.log("Handling message: " + text);
   const opcode = text.substring(0, 1);
   const payload = text.substring(1);
   if (opcode && payload) {
@@ -41,6 +50,16 @@ function handle_message_string(text) {
   }
 }
 
+function handle_user_added(payload) {
+  const user = payload.u;
+  if (!(user in users)) {
+    const user_li = get_user_list_item(user);
+    const user_list = document.getElementById("user_list");
+    users[user] = user_li;
+    user_list.appendChild(user_li);
+  }
+}
+
 function handle_chat_line(payload, bold) {
   append_message(payload.u, payload.t, payload.m, bold);
 }
@@ -49,6 +68,7 @@ function handle_message(opcode, payload_object) {
   const handlers = {
     m: (object_data) => handle_chat_line(object_data, false),
     M: (object_data) => handle_chat_line(object_data, true),
+    U: handle_user_added,
   };
 
   if (opcode in handlers) {

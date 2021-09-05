@@ -8,9 +8,22 @@ let users = {};
 let messages = [];
 
 function broadcast_message(msg) {
+  console.log("Broadcasted message: " + msg);
   for (const [key, value] of Object.entries(users)) {
     value.send(msg);
   }
+}
+
+function user_join_to_string(username) {
+  let message = { u: username };
+  let parsed = "U".concat(JSON.stringify(message));
+  return parsed;
+}
+
+function user_left_to_string(username) {
+  let message = { u: username };
+  let parsed = "u".concat(JSON.stringify(message));
+  return parsed;
 }
 
 function message_to_string(msg) {
@@ -39,6 +52,7 @@ function drop_user(username) {
     delete users[username];
   }
   push_message(username, "left.", true);
+  broadcast_message(user_left_to_string(username));
 }
 
 const requestListener = function (req, res) {
@@ -51,6 +65,7 @@ wss.on("connection", function connection(ws, username) {
   console.log(username + " connected");
   users[username] = ws;
   push_message(username, "joined.", true);
+  broadcast_message(user_join_to_string(username));
   // Message
   ws.on("message", function incoming(message) {
     console.log("received: %s", message + " from " + username);
