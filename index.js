@@ -54,7 +54,7 @@ wss.on("connection", function connection(ws, username) {
   ws.on("message", function incoming(message) {
     console.log("received: %s", message + " from " + username);
     ws.send("something " + message);
-    push_message(username, message, false);
+    push_message(username, message.toString(), false);
   });
   // Error
   ws.on("error", function error_handler(error) {
