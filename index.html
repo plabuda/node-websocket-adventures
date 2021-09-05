@@ -85,16 +85,24 @@
         let value = document.getElementById('login_box').value;
         if(value)
         {
+            try
+            {
+                
             let url = encodeURI(websocket_url.concat("/", value));
             console.log("Final URL is: " + url);
 
-            document.getElementById('login_div').style.display = "none";
-            document.getElementById('chat_div').style.display = "flex";
-            
             exampleSocket = new WebSocket(url);
-            exampleSocket.onopen = (event) => { console.log('socket opened');};
+            exampleSocket.onopen = (event) => { console.log('socket opened');
+            document.getElementById('login_div').style.display = "none";
+            document.getElementById('chat_div').style.display = "flex";};
+
+            exampleSocket.onerror = (error) => { exampleSocket = undefined;};
             exampleSocket.onmessage = (event) => {
                 document.getElementById('response').innerHTML = event.data ;};
+            } catch
+            {
+                exampleSocket = undefined;
+            }
         }
 
     }
