@@ -60,6 +60,15 @@ function handle_user_added(payload) {
   }
 }
 
+function handle_user_removed(payload) {
+  const user = payload.u;
+  if (user in users) {
+    const user_list = document.getElementById("user_list");
+    user_list.removeChild(users[user]);
+    delete users[user];
+  }
+}
+
 function handle_chat_line(payload, bold) {
   append_message(payload.u, payload.t, payload.m, bold);
 }
@@ -69,6 +78,7 @@ function handle_message(opcode, payload_object) {
     m: (object_data) => handle_chat_line(object_data, false),
     M: (object_data) => handle_chat_line(object_data, true),
     U: handle_user_added,
+    u: handle_user_removed,
   };
 
   if (opcode in handlers) {
