@@ -78,6 +78,8 @@
         const value = document.getElementById('message_box').value;
         console.log('sending ' + value + ' to server');
         exampleSocket.send(value);
+        var form = document.getElementById("myForm");
+        form.reset();
     }
 
     function websocket_on_message(event)
@@ -121,13 +123,14 @@
                 <h2 class="center_text"><b>Login:</b></h2>
             </div>
 
+            <form onsubmit="myFunction(); return false;">
             <div class="input_div"><input id="login_box" class="input_input">
 
             </div>
             <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
-                onclick="myFunction()">
+                type="submit">
                 <h2 class="center_text"><b>></b></h2>
-            </button>
+            </button></form>
 
         </div>
     </div>
@@ -137,13 +140,15 @@
             <h2>Users present:</h1>
                 <ul style="flex-grow: 1;" id="user_list"></ul>
                 <div style="display: flex; flex-flow: row nowrap; height: 60px;">
+        <form onsubmit="send(); return false;" id="myForm">
             <div class="input_div">
                     <input id="message_box" class="input_input">
                 </div>     
                        <button style="background-color:tomato; height: 100%; width: 60px; display: flex; border: 0px;"
-                onclick="send()">
+                type="submit">
                 <h2 class="center_text"><b>></b></h2>
             </button>
+        </form>
                 </div>
         </div>
         <div id="response" style="background-color:dimgray; width: 48%;"></div>
