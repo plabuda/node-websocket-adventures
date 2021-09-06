@@ -73,12 +73,20 @@ function handle_chat_line(payload, bold) {
   append_message(payload.u, payload.t, payload.m, bold);
 }
 
+function handle_list(payload) {
+  const list = payload.l;
+  list.forEach((element) => {
+    handle_message_string(element);
+  });
+}
+
 function handle_message(opcode, payload_object) {
   const handlers = {
     m: (object_data) => handle_chat_line(object_data, false),
     M: (object_data) => handle_chat_line(object_data, true),
     U: handle_user_added,
     u: handle_user_removed,
+    L: handle_list,
   };
 
   if (opcode in handlers) {
@@ -123,4 +131,7 @@ function get_message_div(name, timestamp, message, bold) {
 function append_message(name, timestamp, message, bold) {
   let output = document.getElementById("response");
   output.appendChild(get_message_div(name, timestamp, message, bold));
+  while (output.children.length > 15) {
+    output.removeChild(output.children[0]);
+  }
 }

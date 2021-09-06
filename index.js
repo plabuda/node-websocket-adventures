@@ -32,6 +32,24 @@ function message_to_string(msg) {
   return parsed;
 }
 
+function get_message_list_string() {
+  let result = { l: [] };
+  messages.forEach((element) => {
+    result.l.push(message_to_string(element));
+  });
+  let parsed = "L".concat(JSON.stringify(result));
+  return parsed;
+}
+
+function get_user_list_string() {
+  let result = { l: [] };
+  for (const [key, value] of Object.entries(users)) {
+    result.l.push(user_join_to_string(key));
+  }
+  let parsed = "L".concat(JSON.stringify(result));
+  return parsed;
+}
+
 function push_message(username, message, is_bold) {
   let object = {
     time: Date.now(),
@@ -43,6 +61,9 @@ function push_message(username, message, is_bold) {
   let result = message_to_string(object);
   console.log(result);
   broadcast_message(result);
+  while (messages.length > 15) {
+    messages.shift();
+  }
 }
 
 function drop_user(username) {
@@ -63,13 +84,14 @@ const requestListener = function (req, res) {
 
 wss.on("connection", function connection(ws, username) {
   console.log(username + " connected");
+  ws.send(get_user_list_string());
   users[username] = ws;
+  ws.send(get_message_list_string());
   push_message(username, "joined.", true);
   broadcast_message(user_join_to_string(username));
   // Message
   ws.on("message", function incoming(message) {
     console.log("received: %s", message + " from " + username);
-    ws.send("something " + message);
     push_message(username, message.toString(), false);
   });
   // Error
